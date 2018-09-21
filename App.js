@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Constants } from 'expo'
+import { createMaterialTopTabNavigator } from 'react-navigation'
 import { AddDeck } from './components/decks/AddDeck'
 import { ViewDecks } from './components/decks/ViewDecks'
 import { AddCard } from './components/cards/AddCard'
@@ -15,6 +16,15 @@ function FlashCardsStatusBar() {
   )
 }
 
+const HomeNav = createMaterialTopTabNavigator({
+  ViewDecks: {
+    screen: ViewDecks,
+  },
+  AddDeck: {
+    screen: AddDeck,
+  },
+})
+
 export default class App extends React.Component {
   render() {
     return (
@@ -24,7 +34,7 @@ export default class App extends React.Component {
           style={{
             flex: 1,
           }}>
-          <Quiz />
+          <HomeNav />
         </View>
       </View>
     )
