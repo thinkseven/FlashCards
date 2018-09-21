@@ -1,2 +1,2 @@
 watchman watch-del-all &&
-npm start --reset-cache
+yarn start --reset-cache
