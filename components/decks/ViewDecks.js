@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { DeckItem } from './DeckItem'
+import DeckItem from './DeckItem'
 
-export class ViewDecks extends Component {
+export default class ViewDecks extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>

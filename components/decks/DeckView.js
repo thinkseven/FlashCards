@@ -1,16 +1,26 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 
-export class DeckView extends Component {
+export default class DeckView extends Component {
+  static navigationOptions = ({ navigation }) => {
+    // change title dynamically
+    return {
+      title: '',
+    }
+  }
   render() {
     const { navigation } = this.props
+    // get params navigation.getParam('')
+    // get deck id or other details
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Deck Details View</Text>
         <Text>With more options</Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('AddCard')
+            navigation.navigate('AddCard', {
+              /* pass data to add card*/
+            })
           }}
         >
           <View>
@@ -23,7 +33,7 @@ export class DeckView extends Component {
           }}
         >
           <View>
-            <Text>Quiz</Text>
+            <Text>Start Quiz</Text>
           </View>
         </TouchableOpacity>
       </View>

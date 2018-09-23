@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
-export class DeckItem extends Component {
+export default class DeckItem extends Component {
   navigateToDeckView = () => {
     const { navigation } = this.props
-    navigation.navigate('DeckView')
+    navigation.navigate('DeckView', {
+      /* pass deck id or other details*/
+    })
   }
   render() {
     return (
