@@ -6,7 +6,6 @@ import AddDeck from './decks/AddDeck'
 import ViewDecks from './decks/ViewDecks'
 import DeckView from './decks/DeckView'
 import AddCard from './cards/AddCard'
-import ViewCard from './cards/ViewCard'
 import Quiz from './cards/Quiz'
 
 const DeckNav = createMaterialTopTabNavigator({
