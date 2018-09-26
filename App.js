@@ -39,31 +39,19 @@ const sample_decks = {
 
 store.dispatch(FetchDecks(sample_decks))
 
+store.dispatch(AddDeck('Redux'))
+
 store.dispatch(
-  AddDeck({
-    Redux: {
-      title: 'Redux',
-    },
+  AddCard('Redux', {
+    question: 'What is Redux',
+    answer: 'Redux is all state management in predictable manner',
   }),
 )
 
 store.dispatch(
-  AddCard({
-    title: 'Redux',
-    question: {
-      question: 'What is Redux',
-      answer: 'Redux is all state management in predictable manner',
-    },
-  }),
-)
-
-store.dispatch(
-  AddCard({
-    title: 'Redux',
-    question: {
-      question: 'What is Redux thunk',
-      answer: 'this is middleware to asynchronous',
-    },
+  AddCard('Redux', {
+    question: 'What is Redux thunk',
+    answer: 'this is middleware to asynchronous',
   }),
 )
 

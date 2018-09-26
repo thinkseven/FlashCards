@@ -7,12 +7,13 @@ export const FetchDecks = decks => ({
   decks,
 })
 
-export const AddDeck = deck => ({
+export const AddDeck = title => ({
   type: NEW_DECK,
-  deck,
+  title,
 })
 
-export const AddCard = card => ({
+export const AddCard = (title, card) => ({
   type: ADD_CARD,
+  title,
   card,
 })
