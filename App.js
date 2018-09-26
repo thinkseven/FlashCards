@@ -2,58 +2,29 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Constants } from 'expo'
 import MainNav from './components/MainNav'
-import { createStore } from 'redux'
+import { createStore, compose } from 'redux'
 import decks from './reducers'
-import { FetchDecks, AddDeck, AddCard } from './actions'
+import middleware from './middleware'
+import { InitializeDecks, HandleAddDeck, HandleAddCard } from './actions'
+import { getDecks } from './utils/database'
 
-const store = createStore(
-  decks /* preloadedState, */,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+// const store = createStore(
+//   decks /* preloadedState, */,
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+// )
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose
+
+const enhancer = composeEnhancers(
+  middleware,
+  // other store enhancers if any
 )
-
-const sample_decks = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces',
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event',
-      },
-    ],
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer:
-          'The combination of a function and the lexical environment within which that function was declared.',
-      },
-    ],
-  },
-}
-
-store.dispatch(FetchDecks(sample_decks))
-
-store.dispatch(AddDeck('Redux'))
-
-store.dispatch(
-  AddCard('Redux', {
-    question: 'What is Redux',
-    answer: 'Redux is all state management in predictable manner',
-  }),
-)
-
-store.dispatch(
-  AddCard('Redux', {
-    question: 'What is Redux thunk',
-    answer: 'this is middleware to asynchronous',
-  }),
-)
+const store = createStore(decks, enhancer)
 
 export default class App extends Component {
   render() {
