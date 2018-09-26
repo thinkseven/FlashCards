@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 import MainNav from './components/MainNav'
 import { createStore, compose } from 'redux'
 import decks from './reducers'
 import middleware from './middleware'
-import { InitializeDecks, HandleAddDeck, HandleAddCard } from './actions'
-import { getDecks } from './utils/database'
 
 // const store = createStore(
 //   decks /* preloadedState, */,
@@ -29,12 +28,14 @@ const store = createStore(decks, enhancer)
 export default class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.statusbar}>
-          <StatusBar translucent barStyle="light-content" />
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <View style={styles.statusbar}>
+            <StatusBar translucent barStyle="light-content" />
+          </View>
+          <MainNav />
         </View>
-        <MainNav />
-      </View>
+      </Provider>
     )
   }
 }

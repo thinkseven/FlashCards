@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
 import DeckItem from './DeckItem'
 
-export default class ViewDecks extends Component {
+class ViewDecks extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -20,3 +21,5 @@ export default class ViewDecks extends Component {
     )
   }
 }
+
+export default connect()(ViewDecks)
