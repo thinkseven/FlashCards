@@ -17,6 +17,7 @@ class ViewDecks extends Component {
         {decks.map(deck => {
           return (
             <DeckItem
+              key={deck.title}
               title={deck.title}
               count={deck.count}
               navigation={navigation}
@@ -29,7 +30,7 @@ class ViewDecks extends Component {
 }
 
 const mapStateToProps = state => {
-  const decks = Object.keys(state).filter(key => {
+  const decks = Object.keys(state).map(key => {
     const { title, questions } = state[key]
     const count = questions ? questions.length : 0
     return {
