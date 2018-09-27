@@ -12,10 +12,11 @@ class Quiz extends Component {
   incrementCorrect = () => {
     const { questions } = this.props
     const maxIndex = questions.length - 1
+    const maxScore = questions.length
     this.setState(({ score, index }) => {
       return {
         index: index < maxIndex ? index + 1 : index,
-        score: score >= 0 ? score + 1 : score,
+        score: score >= 0 && score < maxScore ? score + 1 : score,
       }
     })
   }
@@ -23,10 +24,11 @@ class Quiz extends Component {
   decrementInCorrect = () => {
     const { questions } = this.props
     const maxIndex = questions.length - 1
+    const maxScore = questions.length
     this.setState(({ score, index }) => {
       return {
         index: index < maxIndex ? index + 1 : index,
-        score: score > 0 ? score - 1 : score,
+        score: score > 0 && score < maxScore ? score - 1 : score,
       }
     })
   }
