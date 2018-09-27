@@ -3,9 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native'
 
 export default class DeckItem extends Component {
   navigateToDeckView = () => {
-    const { title, navigation } = this.props
+    const { title, count, navigation } = this.props
     navigation.navigate('DeckView', {
       title: title,
+      count: count,
     })
   }
   render() {

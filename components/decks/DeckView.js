@@ -5,21 +5,21 @@ export default class DeckView extends Component {
   static navigationOptions = ({ navigation }) => {
     // change title dynamically
     return {
-      title: '',
+      title: navigation.getParam('title'),
     }
   }
   render() {
     const { navigation } = this.props
-    // get params navigation.getParam('')
-    // get deck id or other details
+    const title = navigation.getParam('title')
+    const count = navigation.getParam('count')
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Deck Details View</Text>
-        <Text>With more options</Text>
+        <Text>{title}</Text>
+        <Text>{count} cards</Text>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('AddCard', {
-              /* pass data to add card*/
+              title: title,
             })
           }}
         >
@@ -29,7 +29,9 @@ export default class DeckView extends Component {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Quiz')
+            navigation.navigate('Quiz', {
+              title: title,
+            })
           }}
         >
           <View>
