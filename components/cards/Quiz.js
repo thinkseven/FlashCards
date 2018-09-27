@@ -7,29 +7,38 @@ class Quiz extends Component {
     index: 0,
     score: 0,
     toggle: false,
+    endQuiz: false,
   }
 
   incrementCorrect = () => {
-    const { questions } = this.props
-    const maxIndex = questions.length - 1
-    const maxScore = questions.length
     this.setState(({ score, index }) => {
-      return {
-        index: index < maxIndex ? index + 1 : index,
-        score: score >= 0 && score < maxScore ? score + 1 : score,
-      }
+      const { questions } = this.props
+      const maxIndex = questions.length - 1
+      const maxScore = questions.length
+      return index == maxIndex
+        ? {
+            endQuiz: true,
+          }
+        : {
+            index: index < maxIndex ? index + 1 : index,
+            score: score >= 0 && score < maxScore ? score + 1 : score,
+          }
     })
   }
 
   decrementInCorrect = () => {
-    const { questions } = this.props
-    const maxIndex = questions.length - 1
-    const maxScore = questions.length
     this.setState(({ score, index }) => {
-      return {
-        index: index < maxIndex ? index + 1 : index,
-        score: score > 0 && score < maxScore ? score - 1 : score,
-      }
+      const { questions } = this.props
+      const maxIndex = questions.length - 1
+      const maxScore = questions.length
+      return index == maxIndex
+        ? {
+            endQuiz: true,
+          }
+        : {
+            index: index < maxIndex ? index + 1 : index,
+            score: score > 0 && score < maxScore ? score - 1 : score,
+          }
     })
   }
 
@@ -43,9 +52,13 @@ class Quiz extends Component {
 
   render() {
     const { questions } = this.props
-    const { index, score, toggle } = this.state
+    const { index, score, toggle, endQuiz } = this.state
     const { question, answer } = questions[index]
-    return (
+    return endQuiz ? (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>{Math.round((score / questions.length) * 100)}%</Text>
+      </View>
+    ) : (
       <View style={{ flex: 1 }}>
         <Text>
           {index + 1} / {questions.length}
