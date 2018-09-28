@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 class Quiz extends Component {
@@ -55,50 +55,48 @@ class Quiz extends Component {
     const { index, score, toggle, endQuiz } = this.state
     const { question, answer } = questions[index]
     return endQuiz ? (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.score}>
         <Text>{Math.round((score / questions.length) * 100)}%</Text>
       </View>
     ) : (
       <View style={{ flex: 1 }}>
-        <Text>
-          {index + 1} / {questions.length}
-        </Text>
-        {!toggle && (
-          <View style={{ flex: 1 }}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text>{question}</Text>
+        <View>
+          <Text>
+            {index + 1} / {questions.length}
+          </Text>
+        </View>
+        <View style={styles.quiz}>
+          {!toggle && (
+            <View>
+              <Text style={{ textAlign: 'center', fontSize: 50 }}>
+                {question}
+              </Text>
+              <TouchableOpacity onPress={this.toggle}>
+                <Text style={{ textAlign: 'center', color: 'red' }}>
+                  Answer
+                </Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={this.toggle}>
-              <Text>Answer</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        {toggle && (
-          <View style={{ flex: 1 }}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text>{answer}</Text>
+          )}
+          {toggle && (
+            <View>
+              <Text style={{ textAlign: 'center', fontSize: 50 }}>
+                {answer}
+              </Text>
+              <TouchableOpacity onPress={this.toggle}>
+                <Text style={{ textAlign: 'center', color: 'red' }}>
+                  Question
+                </Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={this.toggle}>
-              <Text>Question</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+          )}
+        </View>
         <View>
           <TouchableOpacity onPress={this.incrementCorrect}>
-            <Text>Correct</Text>
+            <Text style={styles.buttonCorrect}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.decrementInCorrect}>
-            <Text>Incorrect</Text>
+            <Text style={styles.buttonIncorrect}>Incorrect</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -110,5 +108,47 @@ const mapStateToProps = (state, { navigation }) => {
   const title = navigation.getParam('title')
   return state[title]
 }
+
+const styles = StyleSheet.create({
+  score: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  count: {
+    flex: 1,
+    height: 10,
+  },
+  quiz: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    margin: 5,
+  },
+  buttonCorrect: {
+    margin: 10,
+    borderRadius: 5,
+    padding: 10,
+    width: 200,
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: 'green',
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+  buttonIncorrect: {
+    margin: 10,
+    borderRadius: 5,
+    padding: 10,
+    width: 200,
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: 'red',
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+})
 
 export default connect(mapStateToProps)(Quiz)
