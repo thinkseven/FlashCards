@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import DeckItem from './DeckItem'
 import { InitializeDecks } from '../../actions/'
@@ -13,7 +13,7 @@ class ViewDecks extends Component {
   render() {
     const { decks, navigation } = this.props
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView>
         {decks.map(deck => {
           return (
             <DeckItem
@@ -24,7 +24,7 @@ class ViewDecks extends Component {
             />
           )
         })}
-      </View>
+      </ScrollView>
     )
   }
 }

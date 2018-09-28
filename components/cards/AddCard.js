@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { HandleAddCard } from '../../actions'
 
@@ -35,31 +42,62 @@ class AddCard extends Component {
       question: '',
       answer: '',
     })
+    navigation.goBack()
   }
 
   render() {
     return (
-      <View>
+      <KeyboardAvoidingView
+        style={{ flex: 1, alignItems: 'stretch' }}
+        behavior="padding"
+        enabled
+      >
         <TextInput
-          style={{ height: 40 }}
-          placeholder="Deck Title"
+          style={styles.question}
+          placeholder="Write a question"
           onChangeText={this.handleQuestionInput}
           value={this.state.question}
         />
         <TextInput
-          style={{ height: 40 }}
-          placeholder="Deck Title"
+          style={styles.answer}
+          placeholder="Write a answer"
           onChangeText={this.handleAnswerInput}
           value={this.state.answer}
         />
         <TouchableOpacity onPress={this.submitCard}>
-          <View>
-            <Text>Submit</Text>
-          </View>
+          <Text style={styles.buttonAdd}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  question: {
+    margin: 20,
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  answer: {
+    margin: 20,
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  buttonAdd: {
+    margin: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    width: 200,
+    height: 40,
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: 'black',
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+})
 
 export default connect()(AddCard)
