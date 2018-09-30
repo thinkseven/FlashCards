@@ -18,10 +18,11 @@ class Quiz extends Component {
       return index == maxIndex
         ? {
             endQuiz: true,
+            score: score + 1,
           }
         : {
-            index: index < maxIndex ? index + 1 : index,
-            score: score >= 0 && score < maxScore ? score + 1 : score,
+            index: index + 1,
+            score: score + 1,
           }
     })
   }
@@ -36,8 +37,7 @@ class Quiz extends Component {
             endQuiz: true,
           }
         : {
-            index: index < maxIndex ? index + 1 : index,
-            score: score > 0 && score < maxScore ? score - 1 : score,
+            index: index + 1,
           }
     })
   }
@@ -102,11 +102,12 @@ class Quiz extends Component {
   renderScore = () => {
     const { questions } = this.props
     const { score } = this.state
+    const maxScore = questions.length
     return (
       <View style={styles.score}>
         <Text style={{ color: 'green', fontSize: 20 }}>Your Score</Text>
         <Text style={{ color: 'green', fontSize: 100, fontWeight: 'bold' }}>
-          {Math.round((score / questions.length) * 100)}%
+          {Math.round((score / maxScore) * 100)}%
         </Text>
       </View>
     )
