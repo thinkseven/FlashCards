@@ -50,15 +50,11 @@ class Quiz extends Component {
     })
   }
 
-  render() {
+  renderQuiz = () => {
     const { questions } = this.props
-    const { index, score, toggle, endQuiz } = this.state
+    const { index, toggle } = this.state
     const { question, answer } = questions[index]
-    return endQuiz ? (
-      <View style={styles.score}>
-        <Text>{Math.round((score / questions.length) * 100)}%</Text>
-      </View>
-    ) : (
+    return (
       <View style={{ flex: 1 }}>
         <View>
           <Text>
@@ -101,6 +97,45 @@ class Quiz extends Component {
         </View>
       </View>
     )
+  }
+
+  renderScore = () => {
+    const { questions } = this.props
+    const { score } = this.state
+    return (
+      <View style={styles.score}>
+        <Text style={{ color: 'green', fontSize: 20 }}>Your Score</Text>
+        <Text style={{ color: 'green', fontSize: 100, fontWeight: 'bold' }}>
+          {Math.round((score / questions.length) * 100)}%
+        </Text>
+      </View>
+    )
+  }
+
+  renderNoQuiz = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{ color: 'green', fontSize: 20 }}>
+          No card to begin quiz!!
+        </Text>
+      </View>
+    )
+  }
+
+  render() {
+    const { questions } = this.props
+    const { endQuiz } = this.state
+    return questions && questions.length > 0
+      ? endQuiz
+        ? this.renderScore()
+        : this.renderQuiz()
+      : this.renderNoQuiz()
   }
 }
 
