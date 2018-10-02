@@ -14,11 +14,13 @@ class AddCard extends Component {
   state = {
     question: '',
     answer: '',
+    invalid: false,
   }
 
   handleQuestionInput = text => {
     this.setState({
       question: text,
+      invalidQuestion: false,
     })
   }
 
@@ -32,20 +34,28 @@ class AddCard extends Component {
     const { dispatch, navigation } = this.props
     const title = navigation.getParam('title')
     const { question, answer } = this.state
-    dispatch(
-      HandleAddCard(title, {
-        question,
-        answer,
-      }),
-    )
-    this.setState({
-      question: '',
-      answer: '',
-    })
-    navigation.goBack()
+    if (question !== '' && answer !== '') {
+      dispatch(
+        HandleAddCard(title, {
+          question,
+          answer,
+        }),
+      )
+      this.setState({
+        question: '',
+        answer: '',
+        invalid: false,
+      })
+      navigation.goBack()
+    } else {
+      this.setState({
+        invalid: true,
+      })
+    }
   }
 
   render() {
+    const { invalid, question, answer } = this.state
     return (
       <KeyboardAvoidingView
         style={{ flex: 1, alignItems: 'stretch' }}
@@ -56,14 +66,36 @@ class AddCard extends Component {
           style={styles.question}
           placeholder="Write a question"
           onChangeText={this.handleQuestionInput}
-          value={this.state.question}
+          value={question}
         />
+        {invalid &&
+          question === '' && (
+            <Text
+              style={{
+                padding: 5,
+                color: 'red',
+              }}
+            >
+              please enter a question
+            </Text>
+          )}
         <TextInput
           style={styles.answer}
           placeholder="Write a answer"
           onChangeText={this.handleAnswerInput}
-          value={this.state.answer}
+          value={answer}
         />
+        {invalid &&
+          answer === '' && (
+            <Text
+              style={{
+                padding: 5,
+                color: 'red',
+              }}
+            >
+              please enter a answer
+            </Text>
+          )}
         <TouchableOpacity onPress={this.submitCard}>
           <Text style={styles.buttonAdd}>Submit</Text>
         </TouchableOpacity>
@@ -74,13 +106,13 @@ class AddCard extends Component {
 
 const styles = StyleSheet.create({
   question: {
-    margin: 20,
+    margin: 10,
     padding: 5,
     borderWidth: 1,
     borderRadius: 5,
   },
   answer: {
-    margin: 20,
+    margin: 10,
     padding: 5,
     borderWidth: 1,
     borderRadius: 5,

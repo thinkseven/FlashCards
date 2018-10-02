@@ -13,6 +13,7 @@ import { HandleAddDeck } from '../../actions'
 class AddDeck extends Component {
   state = {
     title: '',
+    invalid: false,
   }
 
   handleInput = text => {
@@ -23,14 +24,23 @@ class AddDeck extends Component {
 
   submitDeck = () => {
     const { dispatch, navigation } = this.props
-    dispatch(HandleAddDeck(this.state.title))
-    this.setState({
-      title: '',
-    })
-    navigation.goBack()
+    const { title } = this.state
+    if (title !== '') {
+      dispatch(HandleAddDeck(this.state.title))
+      this.setState({
+        title: '',
+        invalid: false,
+      })
+      navigation.goBack()
+    } else {
+      this.setState({
+        invalid: true,
+      })
+    }
   }
 
   render() {
+    const { invalid, title } = this.state
     return (
       <View
         style={{
@@ -59,8 +69,19 @@ class AddDeck extends Component {
             style={styles.title}
             placeholder="Deck Title"
             onChangeText={this.handleInput}
-            value={this.state.title}
+            value={title}
           />
+          {invalid &&
+            title === '' && (
+              <Text
+                style={{
+                  padding: 10,
+                  color: 'red',
+                }}
+              >
+                please enter the deck title
+              </Text>
+            )}
           <TouchableOpacity onPress={this.submitDeck}>
             <Text style={styles.buttonAdd}>Submit</Text>
           </TouchableOpacity>

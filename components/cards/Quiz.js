@@ -50,6 +50,20 @@ class Quiz extends Component {
     })
   }
 
+  goBack = () => {
+    const { navigation } = this.props
+    navigation.goBack()
+  }
+
+  restartQuiz = () => {
+    this.setState({
+      index: 0,
+      score: 0,
+      toggle: false,
+      endQuiz: false,
+    })
+  }
+
   renderQuiz = () => {
     const { questions } = this.props
     const { index, toggle } = this.state
@@ -89,10 +103,10 @@ class Quiz extends Component {
         </View>
         <View>
           <TouchableOpacity onPress={this.incrementCorrect}>
-            <Text style={styles.buttonCorrect}>Correct</Text>
+            <Text style={[styles.buttonCorrect]}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.decrementInCorrect}>
-            <Text style={styles.buttonIncorrect}>Incorrect</Text>
+            <Text style={[styles.buttonIncorrect]}>Incorrect</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -104,11 +118,43 @@ class Quiz extends Component {
     const { score } = this.state
     const maxScore = questions.length
     return (
-      <View style={styles.score}>
-        <Text style={{ color: 'green', fontSize: 20 }}>Your Score</Text>
-        <Text style={{ color: 'green', fontSize: 100, fontWeight: 'bold' }}>
-          {Math.round((score / maxScore) * 100)}%
-        </Text>
+      <View style={{ flex: 1 }}>
+        <View style={styles.quiz}>
+          <View style={styles.score}>
+            <Text style={{ color: 'green', fontSize: 20 }}>Your Score</Text>
+            <Text style={{ color: 'green', fontSize: 100, fontWeight: 'bold' }}>
+              {Math.round((score / maxScore) * 100)}%
+            </Text>
+          </View>
+          <View>
+            <TouchableOpacity onPress={this.restartQuiz}>
+              <Text
+                style={[
+                  styles.buttonCorrect,
+                  {
+                    color: 'white',
+                    backgroundColor: 'black',
+                  },
+                ]}
+              >
+                Restart Quiz
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.goBack}>
+              <Text
+                style={[
+                  styles.buttonIncorrect,
+                  {
+                    color: 'white',
+                    backgroundColor: 'black',
+                  },
+                ]}
+              >
+                Back to Deck
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }
