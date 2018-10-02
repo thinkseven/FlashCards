@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
 class DeckView extends Component {
-  static navigationOptions = ({ title }) => {
+  static navigationOptions = ({ navigation }) => {
+    const title = navigation.getParam('title')
     return {
       title: title,
     }

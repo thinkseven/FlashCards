@@ -11,6 +11,7 @@ const decks = (state = {}, action) => {
       return {
         ...state,
         [action.title]: {
+          ...state[action.title],
           title: action.title,
         },
       }

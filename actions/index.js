@@ -3,6 +3,9 @@ import {
   saveDeckTitle,
   addCardToDeck,
   getDeck,
+  removeDecks,
+  initialDecks,
+  initialDecks2,
 } from '../utils/database'
 
 export const FETCH_DECKS = 'FETCH_DECKS'
@@ -25,10 +28,27 @@ const AddCard = (title, card) => ({
   card,
 })
 
+// fresh setup
+/*
 export const InitializeDecks = () => {
   return dispatch => {
-    getDecks().then(decks => {
-      dispatch(FetchDecks(JSON.parse(decks)))
+    removeDecks().then(() => {
+      initialDecks().then(() => {
+        getDecks().then(decks => {
+          dispatch(FetchDecks(JSON.parse(decks)))
+        })
+      })
+    })
+  }
+}
+*/
+
+export const InitializeDecks = () => {
+  return dispatch => {
+    initialDecks2().then(() => {
+      getDecks().then(decks => {
+        dispatch(FetchDecks(JSON.parse(decks)))
+      })
     })
   }
 }
