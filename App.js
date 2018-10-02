@@ -6,6 +6,7 @@ import MainNav from './components/MainNav'
 import { createStore, compose } from 'redux'
 import decks from './reducers'
 import middleware from './middleware'
+import setLocalNotification from './utils/reminder'
 
 // const store = createStore(
 //   decks /* preloadedState, */,
@@ -29,6 +30,10 @@ import middleware from './middleware'
 const store = createStore(decks, middleware)
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>
